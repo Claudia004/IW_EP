@@ -1,0 +1,285 @@
+/* Estilos personalizados para Cine Galaxia */
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #0dcaf0;
+    --dark-color: #212529;
+    --light-color: #f8f9fa;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+}
+
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    height: 300px;
+    object-fit: cover;
+}
+
+/* Estilos para la sala de asientos */
+.sala-container {
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.pantalla {
+    background: linear-gradient(to bottom, #e0e0e0, #b0b0b0);
+    height: 20px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    text-align: center;
+    color: #333;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+}
+
+.asientos-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 8px;
+    margin: 0 auto;
+    max-width: 400px;
+}
+
+.asiento {
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.asiento.disponible {
+    background-color: #28a745;
+    color: white;
+}
+
+.asiento.ocupado {
+    background-color: #dc3545;
+    color: white;
+    cursor: not-allowed;
+}
+
+.asiento.seleccionado {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.asiento.vip {
+    background-color: #6f42c1;
+    color: white;
+}
+
+.leyenda-asientos {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.leyenda-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+
+.leyenda-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+}
+
+/* Horarios container */
+.horarios-container {
+    max-height: 60px;
+    overflow-y: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: 50vh;
+        text-align: center;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .asientos-grid {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 6px;
+    }
+    
+    .asiento {
+        width: 30px;
+        height: 30px;
+        font-size: 10px;
+    }
+    
+    .card-img-top {
+        height: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .asientos-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 5px;
+    }
+    
+    .asiento {
+        width: 25px;
+        height: 25px;
+        font-size: 9px;
+    }
+    
+    .leyenda-asientos {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Estilos para la tabla de compras */
+.table-responsive {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para badges personalizados */
+.badge-estreno {
+    background-color: var(--danger-color);
+}
+
+.badge-cartelera {
+    background-color: var(--primary-color);
+}
+
+/* Estilos para el carousel de trailers */
+.carousel-item iframe {
+    border-radius: 10px;
+}
+/* Estilos para la página de sedes */
+.map-container {
+    height: 400px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.sede-card {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.sede-card:hover {
+    transform: translateY(-5px);
+}
+
+.sede-card.active {
+    border: 2px solid #0d6efd;
+    background-color: #f8f9fa;
+}
+
+.sede-img {
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+}
+
+.servicios-list {
+    list-style: none;
+    padding: 0;
+}
+
+.servicios-list li {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.servicios-list li:last-child {
+    border-bottom: none;
+}
+
+.servicios-list li::before {
+    content: "✓";
+    color: #28a745;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* Estilos para el mapa responsivo */
+@media (max-width: 768px) {
+    .map-container {
+        height: 300px;
+    }
+    
+    .sede-img {
+        height: 150px;
+    }
+}
+
+/* Estilos para los marcadores del mapa */
+.gm-style .gm-style-iw-c {
+    padding: 0 !important;
+    border-radius: 10px !important;
+}
+
+.gm-style .gm-style-iw-d {
+    overflow: auto !important;
+}
+
+/* Mejoras para la info window */
+.gm-ui-hover-effect {
+    top: 5px !important;
+    right: 5px !important;
+}
