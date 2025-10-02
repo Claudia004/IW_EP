@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cine Galaxia - Estrenos</title>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/estilos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Cine Galaxia</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Estrenos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cartelera.html">Cartelera</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="boletos.html">Comprar Boletos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="compras.html">Mis Compras</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sedes.html">Nuestras Sedes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="agradecimiento.html">Agradecimiento</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section bg-dark text-white py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold">Bienvenido a Cine Galaxia</h1>
+                    <p class="lead">Disfruta de los mejores estrenos desde la comodidad de tu hogar</p>
+                    <a href="boletos.html" class="btn btn-primary btn-lg">Comprar Boletos</a>
+                </div>
+                <div class="col-lg-6">
+                    <div id="trailerCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="ratio ratio-16x9">
+                                    <iframe src="https://www.youtube.com/embed/uYPbbksJxIg" 
+                                            title="Oppenheimer" 
+                                            allowfullscreen></iframe>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="ratio ratio-16x9">
+                                    <iframe src="https://www.youtube.com/embed/pBk4NYhWNMM" 
+                                            title="Barbie" 
+                                            allowfullscreen></iframe>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="ratio ratio-16x9">
+                                    <iframe src="https://www.youtube.com/embed/shW9i6k8cB0" 
+                                            title="Spider-Man: Across the Spider-Verse" 
+                                            allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#trailerCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#trailerCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Estrenos Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Nuevos Estrenos</h2>
+            <div class="row" id="estrenos-container">
+                <!-- Los estrenos se cargarán dinámicamente -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal para Trailers -->
+    <div class="modal fade" id="trailerModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="trailerModalLabel">Trailer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="ratio ratio-16x9">
+                        <iframe id="trailerIframe" src="" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p>&copy; 2025 Cine Galaxia. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Datos actualizados de películas
+        const peliculasActualizadas = [
+            {
+                id: 1,
+                titulo: "Oppenheimer",
+                descripcion: "La historia del físico J. Robert Oppenheimer y su papel en el desarrollo de la bomba atómica durante la Segunda Guerra Mundial.",
+                duracion: 180,
+                genero: "Drama/Biográfico",
+                imagen: "https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_FMjpg_UX1000_.jpg",
+                trailer: "https://www.youtube.com/embed/uYPbbksJxIg",
+                estado: "estreno",
+                precio: 13.50
+            },
+            {
+                id: 2,
+                titulo: "Barbie",
+                descripcion: "Barbie sale del mundo perfecto de Barbieland y se aventura en el mundo real para descubrir el verdadero significado de la vida.",
+                duracion: 114,
+                genero: "Comedia/Aventura",
+                imagen: "https://m.media-amazon.com/images/M/MV5BNjU3N2QxNzYtMjk1NC00MTc4LTk1NTQtMmUxNTljM2I0NDA5XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_FMjpg_UX1000_.jpg",
+                trailer: "https://www.youtube.com/embed/pBk4NYhWNMM",
+                estado: "estreno",
+                precio: 12.00
+            },
+            {
+                id: 3,
+                titulo: "Spider-Man: A través del Spider-Verso",
+                descripcion: "Miles Morales se embarca en una aventura épica a través del multiverso con Gwen Stacy y un nuevo equipo de Spider-Personas.",
+                duracion: 140,
+                genero: "Animación/Acción",
+                imagen: "https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_FMjpg_UX1000_.jpg",
+                trailer: "https://www.youtube.com/embed/shW9i6k8cB0",
+                estado: "estreno",
+                precio: 11.50
+            },
+            {
+                id: 4,
+                titulo: "Guardianes de la Galaxia Vol. 3",
+                descripcion: "Los Guardianes deben proteger a uno de los suyos mientras descubren los misterios del pasado de Rocket.",
+                duracion: 150,
+                genero: "Ciencia Ficción/Aventura",
+                imagen: "https://m.media-amazon.com/images/M/MV5BMDgxOTdjMzYtZGQxMS00ZTAzLWI4Y2UtMTQzN2VlYjYyZWRiXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_FMjpg_UX1000_.jpg",
+                trailer: "https://www.youtube.com/embed/u3V5KDHRQvk",
+                estado: "cartelera",
+                precio: 10.50
+            },
+            {
+                id: 5,
+                titulo: "Avatar: El Sentido del Agua",
+                descripcion: "Jake Sully y Ney'tiri forman una familia en Pandora y enfrentan nuevas amenazas mientras protegen su hogar.",
+                duracion: 192,
+                genero: "Ciencia Ficción/Aventura",
+                imagen: "https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_FMjpg_UX1000_.jpg",
+                trailer: "https://www.youtube.com/embed/a8Gx8wiNbs8",
+                estado: "cartelera",
+                precio: 12.00
+            },
+            {
+                id: 6,
+                titulo: "The Batman",
+                descripcion: "Batman se enfrenta al Acertijo mientras investiga la corrupción en Gotham City durante su segundo año luchando contra el crimen.",
+                duracion: 176,
+                genero: "Acción/Drama",
+                imagen: "https://m.media-amazon.com/images/M/MV5BMDdmMTBiNTYtMDIzNi00NGVlLWIzMDYtZTk3MTQ3NGQxZGEwXkEyXkFqcGdeQXVyMzMwOTU5MDk@._V1_FMjpg_UX1000_.jpg",
+                trailer: "https://www.youtube.com/embed/mqqft2x_Aa4",
+                estado: "cartelera",
+                precio: 11.00
+            },
+            {
+                id: 7,
+                titulo: "Top Gun: Maverick",
+                descripcion: "Después de más de treinta años de servicio, Maverick se enfrenta a su pasado mientras entrena a un grupo de graduados.",
+                duracion: 130,
+                genero: "Acción/Drama",
+                imagen: "https://m.media-amazon.com/images/M/MV5BZWYzOGEwNTgtNWU3NS00ZTQ0LWJkODUtMmVhMjIwMjA1ZmQwXkEyXkFqcGdeQXVyMjkwOTAyMDU@._V1_FMjpg_UX1000_.jpg",
+                trailer: "https://www.youtube.com/embed/qSqVVswa420",
+                estado: "cartelera",
+                precio: 10.00
+            },
+            {
+                id: 8,
+                titulo: "Black Panther: Wakanda Forever",
+                descripcion: "El pueblo de Wakanda lucha para proteger su nación tras la muerte del Rey T'Challa.",
+                duracion: 161,
+                genero: "Acción/Aventura",
+                imagen: "https://m.media-amazon.com/images/M/MV5BNTM4NjIxNmEtYWE5NS00NDczLTkyNWQtYThhNmQyZGQzMjM0XkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_FMjpg_UX1000_.jpg",
+                trailer: "https://www.youtube.com/watch?v=RlOB3UALvrQ",
+                estado: "cartelera",
+                precio: 10.50
+            },
+            {
+                id: 9,
+                titulo: "Doctor Strange en el Multiverso de la Locura",
+                descripcion: "Doctor Strange viaja a través del multiverso para proteger a una joven de un poderoso enemigo.",
+                duracion: 126,
+                genero: "Acción/Fantasía",
+                imagen: "https://m.media-amazon.com/images/M/MV5BNWM0ZGJlMzMtZmYwMi00NzI3LTgzMzMtNjMzNjliNDRmZmFlXkEyXkFqcGdeQXVyMTM1MTE1NDMx._V1_FMjpg_UX1000_.jpg",
+                trailer: "https://www.youtube.com/embed/Rt_UqUm38BI",
+                estado: "cartelera",
+                precio: 10.00
+            },
+            {
+                id: 10,
+                titulo: "Thor: Love and Thunder",
+                descripcion: "Thor emprende un viaje de autodescubrimiento mientras se enfrenta a un asesino conocido como Gorr.",
+                duracion: 119,
+                genero: "Acción/Comedia",
+                imagen: "https://m.media-amazon.com/images/M/MV5BYmMxZWRiMTgtZjM0Ny00NDQxLWIxYWQtZDdlNDNkOTEzYTdlXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_FMjpg_UX1000_.jpg",
+                trailer: "https://www.youtube.com/embed/Go8nTmfrQd8",
+                estado: "cartelera",
+                precio: 9.50
+            },
+            {
+                id: 11,
+                titulo: "Jurassic World: Dominion",
+                descripcion: "Los dinosaurios ahora viven y cazan junto a los humanos en todo el mundo.",
+                duracion: 147,
+                genero: "Ciencia Ficción/Aventura",
+                imagen: "https://m.media-amazon.com/images/M/MV5BOTBjMjA4NmYtN2RjMi00YWZlLTliYTktOTIwMmNkYjYxYmE1XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_FMjpg_UX1000_.jpg",
+                trailer: "https://www.youtube.com/embed/fb5ELWi-ekk",
+                estado: "cartelera",
+                precio: 11.00
+            },
+            {
+                id: 12,
+                titulo: "Lightyear",
+                descripcion: "La historia de origen de Buzz Lightyear, el héroe que inspiró el juguete.",
+                duracion: 105,
+                genero: "Animación/Ciencia Ficción",
+                imagen: "https://m.media-amazon.com/images/M/MV5BYTg2Zjk0ZTctM2ZmMi00MDRmLWJjOGYtNWM0YjBmZTBjMjRkXkEyXkFqcGdeQXVyMTM1MTE1NDMx._V1_FMjpg_UX1000_.jpg",
+                trailer: "https://www.youtube.com/embed/BwZs3H_UN3k",
+                estado: "cartelera",
+                precio: 9.00
+            },
+            {
+                id: 13,
+                titulo: "Mission: Impossible - Dead Reckoning Parte Uno",
+                descripcion: "Ethan Hunt y su equipo deben localizar una nueva y aterradora arma.",
+                duracion: 163,
+                genero: "Acción/Aventura",
+                imagen: "https://m.media-amazon.com/images/M/MV5BYzFiZjc1YzctMDY3Zi00NGE5LTlmNWEtN2Q3OWFjYjY1NGM2XkEyXkFqcGdeQXVyMTUyMTUzNjQ0._V1_FMjpg_UX1000_.jpg",
+                trailer: "https://www.youtube.com/embed/avz06PDqDbM",
+                estado: "proximo",
+                precio: 13.00
+            },
+            {
+                id: 14,
+                titulo: "Fast X",
+                descripcion: "Dom Toretto y su familia se enfrentan a su oponente más letal hasta ahora.",
+                duracion: 141,
+                genero: "Acción/Aventura",
+                imagen: "https://m.media-amazon.com/images/M/MV5BNzZmOTU1ZTEtYzVhNi00NzQxLWI5ZjAtNWNhNjEwY2E3YmZjXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_FMjpg_UX1000_.jpg",
+                trailer: "https://www.youtube.com/embed/32RAq6JzY-w",
+                estado: "proximo",
+                precio: 12.50
+            },
+            {
+                id: 15,
+                titulo: "The Super Mario Bros. Movie",
+                descripcion: "Un fontanero llamado Mario viaja a través de un laberinto de tuberías a un mundo mágico.",
+                duracion: 92,
+                genero: "Animación/Aventura",
+                imagen: "https://m.media-amazon.com/images/M/MV5BOTJhNzlmNzctNTU5Yy00N2YwLThhMjQtZDM0YjEzN2Y0ZjNhXkEyXkFqcGdeQXVyMTEwMTQ4MzU5._V1_FMjpg_UX1000_.jpg",
+                trailer: "https://www.youtube.com/embed/TnGl01FkMMo",
+                estado: "proximo",
+                precio: 10.00
+            }
+        ];
+
+        // Horarios disponibles
+        const horariosActualizados = [
+            // Horarios para Oppenheimer (ID: 1)
+            { id: 1, pelicula_id: 1, fecha: "2024-06-15", hora: "14:00", sala: "Sala 1" },
+            { id: 2, pelicula_id: 1, fecha: "2024-06-15", hora: "17:30", sala: "Sala 1" },
+            { id: 3, pelicula_id: 1, fecha: "2024-06-15", hora: "21:00", sala: "Sala 1" },
+            
+            // Horarios para Barbie (ID: 2)
+            { id: 4, pelicula_id: 2, fecha: "2024-06-15", hora: "15:00", sala: "Sala 2" },
+            { id: 5, pelicula_id: 2, fecha: "2024-06-15", hora: "18:30", sala: "Sala 2" },
+            { id: 6, pelicula_id: 2, fecha: "2024-06-15", hora: "22:00", sala: "Sala 2" },
+            
+            // Horarios para Spider-Man (ID: 3)
+            { id: 7, pelicula_id: 3, fecha: "2024-06-15", hora: "16:00", sala: "Sala 3" },
+            { id: 8, pelicula_id: 3, fecha: "2024-06-15", hora: "19:30", sala: "Sala 3" },
+            
+            // Horarios para Guardianes de la Galaxia (ID: 4)
+            { id: 9, pelicula_id: 4, fecha: "2024-06-15", hora: "14:30", sala: "Sala 4" },
+            { id: 10, pelicula_id: 4, fecha: "2024-06-15", hora: "17:00", sala: "Sala 4" },
+            
+            // Horarios para Avatar (ID: 5)
+            { id: 11, pelicula_id: 5, fecha: "2024-06-15", hora: "15:30", sala: "Sala 5" },
+            { id: 12, pelicula_id: 5, fecha: "2024-06-15", hora: "20:00", sala: "Sala 5" },
+            
+            // Horarios para The Batman (ID: 6)
+            { id: 13, pelicula_id: 6, fecha: "2024-06-15", hora: "16:30", sala: "Sala 6" },
+            { id: 14, pelicula_id: 6, fecha: "2024-06-15", hora: "19:00", sala: "Sala 6" },
+            
+            // Horarios para Top Gun (ID: 7)
+            { id: 15, pelicula_id: 7, fecha: "2024-06-15", hora: "17:00", sala: "Sala 7" },
+            { id: 16, pelicula_id: 7, fecha: "2024-06-15", hora: "20:30", sala: "Sala 7" },
+            
+            // Horarios para Black Panther (ID: 8)
+            { id: 17, pelicula_id: 8, fecha: "2024-06-15", hora: "18:00", sala: "Sala 8" },
+            { id: 18, pelicula_id: 8, fecha: "2024-06-15", hora: "21:30", sala: "Sala 8" },
+            
+            // Horarios para Doctor Strange (ID: 9)
+            { id: 19, pelicula_id: 9, fecha: "2024-06-15", hora: "19:00", sala: "Sala 1" },
+            { id: 20, pelicula_id: 9, fecha: "2024-06-15", hora: "22:30", sala: "Sala 1" },
+            
+            // Horarios para Thor (ID: 10)
+            { id: 21, pelicula_id: 10, fecha: "2024-06-15", hora: "14:00", sala: "Sala 2" },
+            { id: 22, pelicula_id: 10, fecha: "2024-06-15", hora: "18:00", sala: "Sala 2" },
+            
+            // Horarios para Jurassic World (ID: 11)
+            { id: 23, pelicula_id: 11, fecha: "2024-06-15", hora: "15:30", sala: "Sala 3" },
+            { id: 24, pelicula_id: 11, fecha: "2024-06-15", hora: "20:00", sala: "Sala 3" },
+            
+            // Horarios para Lightyear (ID: 12)
+            { id: 25, pelicula_id: 12, fecha: "2024-06-15", hora: "16:00", sala: "Sala 4" },
+            { id: 26, pelicula_id: 12, fecha: "2024-06-15", hora: "19:30", sala: "Sala 4" }
+        ];
+
+        // Inicializar datos en localStorage si no existen
+        function inicializarDatos() {
+            if (!localStorage.getItem('peliculas')) {
+                localStorage.setItem('peliculas', JSON.stringify(peliculasActualizadas));
+            }
+            if (!localStorage.getItem('horarios')) {
+                localStorage.setItem('horarios', JSON.stringify(horariosActualizados));
+            }
+            if (!localStorage.getItem('compras')) {
+                localStorage.setItem('compras', JSON.stringify([]));
+            }
+            if (!localStorage.getItem('asientosOcupados')) {
+                localStorage.setItem('asientosOcupados', JSON.stringify({}));
+            }
+            if (!localStorage.getItem('sedes')) {
+                const sedesIniciales = [
+                    {
+                        id: 1,
+                        nombre: "Cine Galaxia Plaza Central",
+                        direccion: "Av. Principal #123, Centro Histórico, CDMX",
+                        latitud: 19.4326,
+                        longitud: -99.1332,
+                        telefono: "+52 55 1234 5678",
+                        horario: "10:00 AM - 11:00 PM",
+                        salas: 8,
+                        servicios: ["Dolby Atmos", "Asientos VIP", "Combo Familiar", "Estacionamiento", "Cafetería"],
+                        caracteristicas: ["Sala IMAX", "Acceso para discapacitados", "Tarjeta de fidelidad"],
+                        imagen: "https://images.unsplash.com/photo-1489599809505-fb40ebc16d30?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                    }
+                ];
+                localStorage.setItem('sedes', JSON.stringify(sedesIniciales));
+            }
+        }
+
+        // Cargar estrenos en la página
+        function cargarEstrenos() {
+            const container = document.getElementById('estrenos-container');
+            const peliculasData = JSON.parse(localStorage.getItem('peliculas'));
+            const estrenos = peliculasData.filter(p => p.estado === 'estreno');
+
+            container.innerHTML = estrenos.map(pelicula => `
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="position-relative">
+                            <img src="${pelicula.imagen}" class="card-img-top" alt="${pelicula.titulo}" 
+                                 style="height: 300px; object-fit: cover;"
+                                 onerror="this.src='https://via.placeholder.com/300x450?text=Poster+No+Disponible'">
+                            <span class="position-absolute top-0 start-0 badge bg-danger m-2">Estreno</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">${pelicula.titulo}</h5>
+                            <p class="card-text">${pelicula.descripcion.substring(0, 100)}...</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-primary">${pelicula.genero}</span>
+                                <span class="text-muted">${pelicula.duracion} min</span>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-outline-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#trailerModal" 
+                                    data-trailer="${pelicula.trailer}" data-titulo="${pelicula.titulo}">
+                                Ver Trailer
+                            </button>
+                            <a href="boletos.html?pelicula=${pelicula.id}" class="btn btn-primary w-100">
+                                Comprar Boletos
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Script para el modal de trailers
+        function configurarModalTrailers() {
+            const trailerModal = document.getElementById('trailerModal');
+            trailerModal.addEventListener('show.bs.modal', function(event) {
+                const button = event.relatedTarget;
+                const trailer = button.getAttribute('data-trailer');
+                const titulo = button.getAttribute('data-titulo');
+                
+                const modalTitle = trailerModal.querySelector('.modal-title');
+                const modalIframe = trailerModal.querySelector('#trailerIframe');
+                
+                modalTitle.textContent = titulo;
+                modalIframe.src = trailer;
+            });
+            
+            trailerModal.addEventListener('hidden.bs.modal', function() {
+                const modalIframe = trailerModal.querySelector('#trailerIframe');
+                modalIframe.src = '';
+            });
+        }
+
+        // Inicializar página
+        document.addEventListener('DOMContentLoaded', function() {
+            inicializarDatos();
+            cargarEstrenos();
+            configurarModalTrailers();
+        });
+    </script>
+</body>
+</html>

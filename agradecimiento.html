@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agradecimiento - Cine Galaxia</title>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/estilos.css" rel="stylesheet">
+    <style>
+        .agradecimiento-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+        
+        .card-agradecimiento {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            border: none;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .foto-profe {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #0d6efd;
+            box-shadow: 0 10px 25px rgba(13, 110, 253, 0.3);
+            margin: 0 auto;
+        }
+        
+        .mensaje-agradecimiento {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+        }
+        
+        .icono-destacado {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .btn-volver {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-volver:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .firma {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 2rem;
+            color: #0d6efd;
+            margin-top: 2rem;
+        }
+        
+        .decoracion {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: flotar 3s ease-in-out infinite;
+        }
+        
+        .decoracion:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .decoracion:nth-child(2) {
+            top: 20%;
+            right: 10%;
+            animation-delay: 1s;
+        }
+        
+        .decoracion:nth-child(3) {
+            bottom: 20%;
+            left: 15%;
+            animation-delay: 2s;
+        }
+        
+        @keyframes flotar {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .badge-agradecimiento {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Decoraciones de fondo -->
+    <div class="decoracion"></div>
+    <div class="decoracion"></div>
+    <div class="decoracion"></div>
+
+    <!-- Sección de Agradecimiento -->
+    <section class="agradecimiento-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card-agradecimiento p-5 text-center">
+                        <!-- Icono destacado -->
+                        <div class="icono-destacado">🎓</div>
+                        
+                        <!-- Badge especial -->
+                        <span class="badge-agradecimiento mb-4">
+                            Agradecimiento Especial
+                        </span>
+                        
+                        <!-- Título principal -->
+                        <h1 class="display-4 fw-bold text-primary mb-4">
+                            ¡Muchas Gracias!
+                        </h1>
+                        
+                        <!-- Foto del profesor -->
+                        <div class="mb-4">
+                            <img src="IMAGENES/profe.png" 
+                                 alt="Profesor Marcelino Torres Villanueva" 
+                                 class="foto-profe"
+                                 onerror="this.src='https://images.unsplash.com/photo-1566753323558-f4e0952af115?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'">
+                        </div>
+                        
+                        <!-- Nombre del profesor -->
+                        <h2 class="h1 text-dark mb-3">
+                            Prof. Marcelino Torres Villanueva
+                        </h2>
+                        
+                        <!-- Mensaje de agradecimiento -->
+                        <div class="mensaje-agradecimiento mb-5">
+                            <p class="lead">
+                                Querido Profesor Marcelino,
+                            </p>
+                            <p>
+                                Quiero expresarle mi más sincero agradecimiento por su invaluable guía, 
+                                paciencia y dedicación durante este curso. Sus enseñanzas no solo me han 
+                                permitido desarrollar este proyecto de <strong>Cine Galaxia</strong>, sino que 
+                                han sembrado en mí la pasión por la programación web y el desarrollo de software.
+                            </p>
+                            <p>
+                                Cada concepto, cada línea de código y cada desafío superado en este proyecto 
+                                lleva consigo su orientación experta. Ha sido un honor aprender bajo su 
+                                tutelage y espero seguir aplicando los conocimientos que tan generosamente 
+                                ha compartido.
+                            </p>
+                            <p class="fw-bold text-primary">
+                                ¡Su impacto como educador trasciende las aulas!
+                            </p>
+                        </div>
+                        
+                        <!-- Firma -->
+                        <div class="firma">
+                            Con aprecio,
+                        </div>
+                        <div class="text-muted mb-4">
+                            Grupo 6 - Estudiantes de "Ingeniería de Sistemas"
+                        </div>
+                        
+                        <!-- Información del proyecto -->
+                        <div class="row mt-4">
+                            <div class="col-md-4 mb-3">
+                                <div class="border rounded p-3">
+                                    <div class="text-primary fs-1">🎬</div>
+                                    <h6>Proyecto</h6>
+                                    <small class="text-muted">Cine Galaxia</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="border rounded p-3">
+                                    <div class="text-primary fs-1">⚡</div>
+                                    <h6>Tecnologías</h6>
+                                    <small class="text-muted">HTML, CSS, JavaScript</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="border rounded p-3">
+                                    <div class="text-primary fs-1">📚</div>
+                                    <h6>Materia</h6>
+                                    <small class="text-muted">Ingeniería Web</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Botón para volver -->
+                        <div class="mt-5">
+                            <a href="index.html" class="btn btn-volver text-white">
+                                🏠 Volver al Cine Galaxia
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Efecto de escritura para el mensaje
+        document.addEventListener('DOMContentLoaded', function() {
+            const mensajes = document.querySelectorAll('.mensaje-agradecimiento p');
+            mensajes.forEach((mensaje, index) => {
+                mensaje.style.opacity = '0';
+                mensaje.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    mensaje.style.transition = 'all 0.8s ease';
+                    mensaje.style.opacity = '1';
+                    mensaje.style.transform = 'translateY(0)';
+                }, index * 400);
+            });
+            
+            // Efecto en la foto
+            const foto = document.querySelector('.foto-profe');
+            setTimeout(() => {
+                foto.style.transform = 'scale(1.05)';
+                foto.style.transition = 'transform 0.5s ease';
+                
+                setTimeout(() => {
+                    foto.style.transform = 'scale(1)';
+                }, 500);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

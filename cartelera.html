@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cine Galaxia - Cartelera</title>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/estilos.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Cine Galaxia</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Estrenos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="cartelera.html">Cartelera</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="boletos.html">Comprar Boletos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="compras.html">Mis Compras</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sedes.html">Nuestras Sedes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="agradecimiento.html">Agradecimiento</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cartelera Section -->
+    <section class="py-5">
+        <div class="container">
+            <h1 class="text-center mb-5">Cartelera Completa</h1>
+            
+            <!-- Filtros -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="filtroBusqueda" placeholder="Buscar película...">
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" id="filtroGenero">
+                        <option value="">Todos los géneros</option>
+                        <option value="Acción">Acción</option>
+                        <option value="Aventura">Aventura</option>
+                        <option value="Ciencia Ficción">Ciencia Ficción</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Comedia">Comedia</option>
+                        <option value="Animación">Animación</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" id="filtroEstado">
+                        <option value="">Todos los estados</option>
+                        <option value="estreno">Estrenos</option>
+                        <option value="cartelera">En Cartelera</option>
+                        <option value="proximo">Próximamente</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="row" id="cartelera-container">
+                <!-- Las películas se cargarán dinámicamente -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p>&copy; 2025 Cine Galaxia. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Cargar cartelera completa con filtros
+        function cargarCartelera(filtroBusqueda = '', filtroGenero = '', filtroEstado = '') {
+            const container = document.getElementById('cartelera-container');
+            const peliculasData = JSON.parse(localStorage.getItem('peliculas'));
+            const horariosData = JSON.parse(localStorage.getItem('horarios'));
+
+            // Aplicar filtros
+            let peliculasFiltradas = peliculasData.filter(pelicula => {
+                const coincideBusqueda = pelicula.titulo.toLowerCase().includes(filtroBusqueda.toLowerCase()) ||
+                                       pelicula.descripcion.toLowerCase().includes(filtroBusqueda.toLowerCase());
+                const coincideGenero = !filtroGenero || pelicula.genero.includes(filtroGenero);
+                const coincideEstado = !filtroEstado || pelicula.estado === filtroEstado;
+                
+                return coincideBusqueda && coincideGenero && coincideEstado;
+            });
+
+            if (peliculasFiltradas.length === 0) {
+                container.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <h3 class="text-muted">No se encontraron películas</h3>
+                        <p class="text-muted">Intenta con otros criterios de búsqueda</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = peliculasFiltradas.map(pelicula => {
+                const horariosPelicula = horariosData ? horariosData.filter(h => h.pelicula_id === pelicula.id) : [];
+                
+                let badgeEstado = '';
+                if (pelicula.estado === 'estreno') {
+                    badgeEstado = '<span class="position-absolute top-0 start-0 badge bg-danger m-2">Estreno</span>';
+                } else if (pelicula.estado === 'proximo') {
+                    badgeEstado = '<span class="position-absolute top-0 start-0 badge bg-warning m-2">Próximamente</span>';
+                }
+                
+                return `
+                <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="position-relative">
+                            <img src="${pelicula.imagen}" class="card-img-top" alt="${pelicula.titulo}" 
+                                 style="height: 300px; object-fit: cover;"
+                                 onerror="this.src='https://via.placeholder.com/300x450?text=Poster+No+Disponible'">
+                            ${badgeEstado}
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">${pelicula.titulo}</h5>
+                            <p class="card-text flex-grow-1">${pelicula.descripcion.substring(0, 100)}...</p>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge bg-primary">${pelicula.genero}</span>
+                                <span class="text-muted">${pelicula.duracion} min</span>
+                            </div>
+                            
+                            ${horariosPelicula.length > 0 ? `
+                            <div class="mt-auto">
+                                <h6 class="mb-2">Horarios Disponibles:</h6>
+                                <div class="horarios-container">
+                                    ${horariosPelicula.slice(0, 3).map(horario => 
+                                        `<span class="badge bg-secondary me-1 mb-1">${horario.hora}</span>`
+                                    ).join('')}
+                                    ${horariosPelicula.length > 3 ? `<span class="badge bg-light text-dark">+${horariosPelicula.length - 3} más</span>` : ''}
+                                </div>
+                            </div>
+                            ` : '<div class="mt-auto"><small class="text-muted">Próximamente</small></div>'}
+                        </div>
+                        <div class="card-footer">
+                            ${pelicula.estado !== 'proximo' ? 
+                                `<a href="boletos.html?pelicula=${pelicula.id}" class="btn btn-primary w-100">Comprar Boletos</a>` :
+                                `<button class="btn btn-outline-secondary w-100" disabled>Próximamente</button>`
+                            }
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        // Configurar filtros
+        function configurarFiltros() {
+            const filtroBusqueda = document.getElementById('filtroBusqueda');
+            const filtroGenero = document.getElementById('filtroGenero');
+            const filtroEstado = document.getElementById('filtroEstado');
+            
+            function aplicarFiltros() {
+                cargarCartelera(
+                    filtroBusqueda.value,
+                    filtroGenero.value,
+                    filtroEstado.value
+                );
+            }
+            
+            filtroBusqueda.addEventListener('input', aplicarFiltros);
+            filtroGenero.addEventListener('change', aplicarFiltros);
+            filtroEstado.addEventListener('change', aplicarFiltros);
+        }
+
+        // Inicializar página
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarCartelera();
+            configurarFiltros();
+        });
+    </script>
+</body>
+</html>

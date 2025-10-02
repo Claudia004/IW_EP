@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cine Galaxia - Nuestras Sedes</title>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/estilos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        .sede-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .sede-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .sede-card.active {
+            border-color: #0d6efd;
+            background-color: #f8f9fa;
+        }
+        
+        .sede-img {
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .servicios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .servicio-item {
+            background: #f8f9fa;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        
+        .map-container {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .sede-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+        }
+        
+        .rating {
+            color: #ffc107;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Cine Galaxia</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Estrenos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cartelera.html">Cartelera</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="boletos.html">Comprar Boletos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="compras.html">Mis Compras</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="sedes.html">Nuestras Sedes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="agradecimiento.html">Agradecimiento</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sedes Section -->
+    <section class="py-5">
+        <div class="container">
+            <h1 class="text-center mb-5">Nuestras Sedes</h1>
+            
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="sede-info p-4 text-center">
+                        <h3 class="mb-3">¡Encuentra tu cine más cercano!</h3>
+                        <p class="lead mb-0">Contamos con sedes estratégicamente ubicadas con la mejor tecnología y comodidad</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <!-- Mapa -->
+                <div class="col-lg-8 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="card-title mb-0">📍 Ubicación de Nuestros Cines</h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <div id="mapa" style="height: 500px;" class="map-container"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Lista de Sedes -->
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-header bg-dark text-white">
+                            <h5 class="card-title mb-0">🎬 Nuestras Sedes</h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <div id="lista-sedes">
+                                <!-- Las sedes se cargarán dinámicamente -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Información de Contacto -->
+                    <div class="card mt-4">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="card-title mb-0">📞 Contacto General</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="flex-shrink-0">
+                                    <span class="bg-primary rounded-circle p-2 text-white">📱</span>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h6 class="mb-0">Teléfono Central</h6>
+                                    <p class="mb-0 text-muted">+52 55 5000 1234</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="flex-shrink-0">
+                                    <span class="bg-primary rounded-circle p-2 text-white">✉️</span>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h6 class="mb-0">Email</h6>
+                                    <p class="mb-0 text-muted">info@cinegalaxia.com</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <span class="bg-primary rounded-circle p-2 text-white">🕒</span>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h6 class="mb-0">Horario General</h6>
+                                    <p class="mb-0 text-muted">10:00 AM - 11:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Grid de Sedes -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h3 class="text-center mb-4">Conoce Nuestras Sedes</h3>
+                </div>
+                
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card sede-card h-100" onclick="mostrarDetalleSede(1)">
+                        <img src="https://images.unsplash.com/photo-1489599809505-fb40ebc16d30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                             class="sede-img" alt="Cine Galaxia Plaza Central">
+                        <div class="card-body">
+                            <h5 class="card-title">Plaza Central</h5>
+                            <p class="card-text text-muted small">Av. Principal #123, Centro Histórico</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-primary">8 Salas</span>
+                                <div class="rating">
+                                    ⭐ 4.8 <small class="text-muted">(2.4k)</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card sede-card h-100" onclick="mostrarDetalleSede(2)">
+                        <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                             class="sede-img" alt="Cine Galaxia Galerías">
+                        <div class="card-body">
+                            <h5 class="card-title">Galerías</h5>
+                            <p class="card-text text-muted small">Plaza Galerías, Av. Revolución</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-primary">6 Salas</span>
+                                <div class="rating">
+                                    ⭐ 4.7 <small class="text-muted">(1.8k)</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card sede-card h-100" onclick="mostrarDetalleSede(3)">
+                        <img src="https://images.unsplash.com/photo-1595769816263-9b910be24d5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                             class="sede-img" alt="Cine Galaxia Perisur">
+                        <div class="card-body">
+                            <h5 class="card-title">Perisur</h5>
+                            <p class="card-text text-muted small">Periférico Sur 4690</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-primary">10 Salas</span>
+                                <div class="rating">
+                                    ⭐ 4.9 <small class="text-muted">(3.1k)</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card sede-card h-100" onclick="mostrarDetalleSede(4)">
+                        <img src="https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                             class="sede-img" alt="Cine Galaxia Santa Fe">
+                        <div class="card-body">
+                            <h5 class="card-title">Santa Fe</h5>
+                            <p class="card-text text-muted small">Centro Comercial Santa Fe</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-primary">12 Salas</span>
+                                <div class="rating">
+                                    ⭐ 4.8 <small class="text-muted">(2.7k)</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Detalles de Sedes -->
+            <div class="row mt-5" id="detalles-sedes">
+                <!-- Los detalles se cargarán dinámicamente -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p>&copy; 2025 Cine Galaxia. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Datos actualizados de sedes con imágenes
+        const sedesIniciales = [
+            {
+                id: 1,
+                nombre: "Cine Galaxia Plaza Central",
+                direccion: "Av. Principal #123, Centro Histórico, CDMX",
+                latitud: 19.4326,
+                longitud: -99.1332,
+                telefono: "+52 55 1234 5678",
+                horario: "10:00 AM - 11:00 PM",
+                salas: 8,
+                calificacion: "4.8",
+                reseñas: "2,400",
+                imagen: "https://images.unsplash.com/photo-1489599809505-fb40ebc16d30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+                servicios: ["Dolby Atmos", "Asientos VIP", "Combo Familiar", "Estacionamiento", "Cafetería", "Sala IMAX", "Acceso para discapacitados", "Tarjeta de fidelidad"],
+                caracteristicas: ["Pantallas 4K Ultra HD", "Sonido envolvente 7.1", "Butacas con calefacción", "Servicio a butaca", "Eventos especiales"]
+            },
+            {
+                id: 2,
+                nombre: "Cine Galaxia Galerías",
+                direccion: "Plaza Galerías, Av. Revolución 1500, CDMX",
+                latitud: 19.3950,
+                longitud: -99.1750,
+                telefono: "+52 55 2345 6789",
+                horario: "9:30 AM - 10:30 PM",
+                salas: 6,
+                calificacion: "4.7",
+                reseñas: "1,800",
+                imagen: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+                servicios: ["IMAX Experience", "Bar Lounge", "Estacionamiento Gratuito", "Dulcería Premium", "Salas premium", "Reservas anticipadas"],
+                caracteristicas: ["Tecnología IMAX con láser", "Butacas de cuero premium", "Área de espera climatizada", "Wi-Fi gratuito", "App móvil exclusiva"]
+            },
+            {
+                id: 3,
+                nombre: "Cine Galaxia Perisur",
+                direccion: "Periférico Sur 4690, Jardines en la Montaña, CDMX",
+                latitud: 19.3028,
+                longitud: -99.1730,
+                telefono: "+52 55 3456 7890",
+                horario: "11:00 AM - 11:30 PM",
+                salas: 10,
+                calificacion: "4.9",
+                reseñas: "3,100",
+                imagen: "https://images.unsplash.com/photo-1595769816263-9b910be24d5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+                servicios: ["4DX", "Dolby Cinema", "Sala Premium", "Food Court", "Kids Zone", "Estacionamiento techado", "Servicio de valet parking"],
+                caracteristicas: ["Tecnología 4DX con efectos multisensoriales", "Asientos reclinables automáticos", "Pantallas de última generación", "Área infantil supervisada", "Estacionamiento con vigilancia 24/7"]
+            },
+            {
+                id: 4,
+                nombre: "Cine Galaxia Santa Fe",
+                direccion: "Centro Comercial Santa Fe, Vasco de Quiroga 3800, CDMX",
+                latitud: 19.3594,
+                longitud: -99.2591,
+                telefono: "+52 55 4567 8901",
+                horario: "10:00 AM - 12:00 AM",
+                salas: 12,
+                calificacion: "4.8",
+                reseñas: "2,700",
+                imagen: "https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+                servicios: ["ScreenX", "Kids Zone", "Food Court", "VIP Lounge", "Eventos Especiales", "Estacionamiento techado", "Área de fumadores"],
+                caracteristicas: ["Pantalla 270° ScreenX", "Butacas VIP con servicio premium", "Sala de lactancia", "Área de juegos infantil", "Estacionamiento con cargadores eléctricos"]
+            }
+        ];
+
+        let mapa;
+        let marcadores = [];
+
+        // Inicializar datos de sedes
+        function inicializarSedes() {
+            if (!localStorage.getItem('sedes')) {
+                localStorage.setItem('sedes', JSON.stringify(sedesIniciales));
+            }
+        }
+
+        // Inicializar mapa
+        function inicializarMapa() {
+            mapa = L.map('mapa').setView([19.4326, -99.1332], 11);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(mapa);
+            
+            cargarMarcadores();
+        }
+
+        // Cargar marcadores en el mapa
+        function cargarMarcadores() {
+            // Limpiar marcadores existentes
+            marcadores.forEach(marker => mapa.removeLayer(marker));
+            marcadores = [];
+            
+            const sedes = JSON.parse(localStorage.getItem('sedes'));
+            
+            sedes.forEach(sede => {
+                // Crear icono personalizado
+                const customIcon = L.divIcon({
+                    html: `
+                        <div style="background: #0d6efd; color: white; padding: 8px 12px; border-radius: 20px; border: 3px solid white; box-shadow: 0 2px 10px rgba(0,0,0,0.3); font-weight: bold; font-size: 12px;">
+                            🎬 ${sede.nombre.split(' ')[2]}
+                        </div>
+                    `,
+                    className: 'custom-marker',
+                    iconSize: [100, 40],
+                    iconAnchor: [50, 40]
+                });
+
+                const marker = L.marker([sede.latitud, sede.longitud], { icon: customIcon })
+                    .addTo(mapa)
+                    .bindPopup(`
+                        <div style="min-width: 250px; padding: 10px;">
+                            <h6 style="margin: 0 0 8px 0; color: #0d6efd;">${sede.nombre}</h6>
+                            <p style="margin: 0 0 5px 0; font-size: 12px; color: #666;">📍 ${sede.direccion}</p>
+                            <p style="margin: 0 0 5px 0; font-size: 12px;">📞 ${sede.telefono}</p>
+                            <p style="margin: 0 0 8px 0; font-size: 12px;">🕒 ${sede.horario}</p>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="background: #28a745; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px;">
+                                    ⭐ ${sede.calificacion}
+                                </span>
+                                <button onclick="mostrarDetalleSede(${sede.id})" 
+                                        style="background: #0d6efd; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 11px;">
+                                    Ver Detalles
+                                </button>
+                            </div>
+                        </div>
+                    `);
+                
+                marcadores.push(marker);
+            });
+        }
+
+        // Cargar lista de sedes
+        function cargarListaSedes() {
+            const container = document.getElementById('lista-sedes');
+            const sedes = JSON.parse(localStorage.getItem('sedes'));
+            
+            container.innerHTML = sedes.map(sede => `
+                <div class="sede-item p-3 border-bottom" onclick="mostrarDetalleSede(${sede.id})" style="cursor: pointer; transition: background-color 0.3s;">
+                    <div class="d-flex align-items-start">
+                        <img src="${sede.imagen}" alt="${sede.nombre}" 
+                             style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; margin-right: 12px;">
+                        <div class="flex-grow-1">
+                            <h6 class="fw-bold mb-1" style="font-size: 0.9rem;">${sede.nombre.split(' ')[2]}</h6>
+                            <p class="text-muted mb-1 small" style="font-size: 0.8rem;">${sede.direccion.split(',')[0]}</p>
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-primary me-2">${sede.salas} salas</span>
+                                <small class="text-muted">⭐ ${sede.calificacion}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Mostrar detalle de sede
+        function mostrarDetalleSede(sedeId) {
+            const sedes = JSON.parse(localStorage.getItem('sedes'));
+            const sede = sedes.find(s => s.id === sedeId);
+            const container = document.getElementById('detalles-sedes');
+            
+            // Remover clase active de todas las cards
+            document.querySelectorAll('.sede-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Agregar clase active a la card seleccionada
+            document.querySelector(`.sede-card[onclick="mostrarDetalleSede(${sedeId})"]`).classList.add('active');
+            
+            container.innerHTML = `
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="card-title mb-0">${sede.nombre}</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <img src="${sede.imagen}" alt="${sede.nombre}" class="img-fluid rounded shadow" 
+                                         style="height: 250px; object-fit: cover; width: 100%;">
+                                    <div class="text-center mt-3">
+                                        <span class="badge bg-success fs-6 p-2">
+                                            ⭐ ${sede.calificacion} (${sede.reseñas} reseñas)
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6 class="text-primary mb-3">📋 Información de Contacto</h6>
+                                            <div class="mb-3">
+                                                <strong>📍 Dirección:</strong><br>
+                                                <span class="text-muted">${sede.direccion}</span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <strong>📞 Teléfono:</strong><br>
+                                                <span class="text-muted">${sede.telefono}</span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <strong>🕒 Horario:</strong><br>
+                                                <span class="text-muted">${sede.horario}</span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <strong>🎭 Salas:</strong><br>
+                                                <span class="text-muted">${sede.salas} salas disponibles</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6 class="text-primary mb-3">🚀 Características Principales</h6>
+                                            <div class="servicios-grid">
+                                                ${sede.caracteristicas.map(caracteristica => 
+                                                    `<div class="servicio-item">✅ ${caracteristica}</div>`
+                                                ).join('')}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mt-4">
+                                        <div class="col-12">
+                                            <h6 class="text-primary mb-3">🎯 Servicios Disponibles</h6>
+                                            <div class="d-flex flex-wrap gap-2">
+                                                ${sede.servicios.map(servicio => 
+                                                    `<span class="badge bg-info text-dark">${servicio}</span>`
+                                                ).join('')}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <div class="alert alert-info">
+                                        <div class="d-flex align-items-center">
+                                            <span class="fs-4 me-3">🎫</span>
+                                            <div>
+                                                <h6 class="alert-heading mb-1">¡Reserva tus boletos ahora!</h6>
+                                                <p class="mb-0">Visita nuestra cartelera y reserva tus boletos para disfrutar de la mejor experiencia cinematográfica en ${sede.nombre.split(' ')[2]}.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="boletos.html" class="btn btn-primary btn-lg me-3">
+                                🛒 Comprar Boletos
+                            </a>
+                            <a href="cartelera.html" class="btn btn-outline-primary btn-lg">
+                                🎬 Ver Cartelera
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Centrar mapa en la sede seleccionada
+            mapa.setView([sede.latitud, sede.longitud], 15);
+            
+            // Resaltar el elemento de la lista
+            document.querySelectorAll('.sede-item').forEach(item => {
+                item.style.backgroundColor = '';
+            });
+            event.currentTarget.style.backgroundColor = '#f8f9fa';
+        }
+
+        // Inicializar página
+        document.addEventListener('DOMContentLoaded', function() {
+            inicializarSedes();
+            inicializarMapa();
+            cargarListaSedes();
+            
+            // Mostrar la primera sede por defecto
+            const sedesData = JSON.parse(localStorage.getItem('sedes'));
+            if (sedesData.length > 0) {
+                mostrarDetalleSede(sedesData[0].id);
+            }
+        });
+    </script>
+</body>
+</html>
